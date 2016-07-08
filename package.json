@@ -1,0 +1,28 @@
+{
+  "name": "hubot-ec2",
+  "version": "0.1.0",
+  "description": "List EC2 instances in Hubot",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnaegle/hubot-ec2.git"
+  },
+  "keywords": [
+    "hubot",
+    "ec2",
+    "aws"
+  ],
+  "dependencies": {
+    "moment": "^2.8.1",
+    "aws-sdk": "^2.4.5"
+  },
+  "author": "John Naegle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnnaegle/hubot-ec2/issues"
+  },
+  "homepage": "https://github.com/johnnaegle/hubot-ec2#readme"
+}
