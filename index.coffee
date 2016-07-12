@@ -77,22 +77,23 @@ module.exports = (robot) ->
             name: name,
             environment: environment,
             state: instance.State.Name,
-            id: instance.InstanceId,
+            instance_id: instance.InstanceId,
             launch_time: moment(instance.LaunchTime).format('YYYY-MM-DD HH:mm:ssZ'),
-            ip: instance.PrivateIpAddress,
+            private_ip: instance.PrivateIpAddress,
+            instance_type: instance.InstanceType
           }
 
         servers.sort (a,b) ->
           sortBy('environment', a, b, true) or
           sortBy('state', a, b) or
           sortBy('name', a, b) or
-          sortBy('id', a, b)
+          sortBy('instance_id', a, b)
 
 
         if servers.length == 0
           msg.send "No matching servers"
         else
-          text =   "#{padRight('Environment', 20)} #{padRight('Name', 32)} #{padRight('State', 16)} #{padRight('InstanceId', 16)} #{padRight('Launch Time', 24)} #{padRight('Private IP', 16)}\n"
-          text +=  "-------------------------------------------------------------------------------------------------------------------------------------\n"
-          text += ("#{padRight(s.environment, 20)} #{padRight(s.name, 32)} #{padRight(s.state, 16)} #{padRight(s.id, 16)} #{padRight(s.launch_time, 24)} #{padRight(s.ip, 16)}" for s in servers).join("\n")
+          text =   "#{padRight('Environment', 20)} #{padRight('Name', 32)} #{padRight('State', 16)} #{padRight('Instance Id', 16)} #{padRight('Instance Type', 16)} #{padRight('Private IP', 16)}\n"
+          text +=  "----------------------------------------------------------------------------------------------------------------------------------------\n"
+          text += ("#{padRight(s.environment, 20)} #{padRight(s.name, 32)} #{padRight(s.state, 16)} #{padRight(s.instance_id, 16)} #{padRight(s.instance_type, 16)} #{padRight(s.private_ip, 16)}" for s in servers).join("\n")
           msg.send "```#{text}```"
