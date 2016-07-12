@@ -54,34 +54,35 @@ module.exports = (robot) ->
     AWS.config.secretAccessKey = process.env.HUBOT_AWS_SECRET_ACCESS_KEY
     AWS.config.region          = process.env.HUBOT_AWS_REGION
 
-    ec2 = new AWS.EC2({apiVersion: '2016-04-01'})
+    ec2 = new AWS.EC2({apiVersion: '2014-10-01'})
     ec2.describeInstances (getParams(msg.match[1])), (err, res) ->
       if err
         msg.send "DescribeInstancesError: #{err}"
       else
         servers = []
         for data in res.Reservations
-          instance = data.Instances[0]
 
-          continue unless instance.State.Name in ['pending', 'running', 'shutting-down', 'stopping']
+          for instance in data.Instances
 
-          name = '[NoName]'
-          environment = ''
-          for tag in instance.Tags
-            if tag.Key == 'Name'
-              name = tag.Value
-            if tag.Key == 'environment'
-              environment = tag.Value
+            continue unless instance.State.Name in ['pending', 'running', 'shutting-down', 'stopping']
 
-          servers.push {
-            name: name,
-            environment: environment,
-            state: instance.State.Name,
-            instance_id: instance.InstanceId,
-            launch_time: moment(instance.LaunchTime).format('YYYY-MM-DD HH:mm:ssZ'),
-            private_ip: instance.PrivateIpAddress,
-            instance_type: instance.InstanceType
-          }
+            name = '[NoName]'
+            environment = ''
+            for tag in instance.Tags
+              if tag.Key == 'Name'
+                name = tag.Value
+              if tag.Key == 'environment'
+                environment = tag.Value
+
+            servers.push {
+              name: name,
+              environment: environment,
+              state: instance.State.Name,
+              instance_id: instance.InstanceId,
+              launch_time: moment(instance.LaunchTime).format('YYYY-MM-DD HH:mm:ssZ'),
+              private_ip: instance.PrivateIpAddress,
+              instance_type: instance.InstanceType
+            }
 
         servers.sort (a,b) ->
           sortBy('environment', a, b, true) or
