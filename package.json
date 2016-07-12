@@ -1,6 +1,6 @@
 {
   "name": "hubot-ec2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "List EC2 instances in Hubot",
   "main": "index.coffee",
   "scripts": {
