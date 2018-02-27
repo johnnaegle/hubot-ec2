@@ -24,6 +24,7 @@ Run `npm install`
 hubot ec2 ls - Displays all Instances
 hubot ec2 ls i-abcd1234 - Details an Instance
 hubot ec2 ls *production* - Instances that contain production in their name tag
+hubot ec2 ls 10.10.10.10 - queries by private-ip address
 ```
 
 ## Configurations

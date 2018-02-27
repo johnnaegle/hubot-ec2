@@ -23,17 +23,27 @@ getParams = (arg) ->
       InstanceIds: [instanceCapture[1]]
     }
   else
-    nameCapture = /^\s*(\S+)\s*$/.exec(arg)
-    if nameCapture
-      params = {
-        Filters: [
-          Name: 'tag:Name',
-          Values: [
-            nameCapture[1]
+    ipCapture = /^\s*(\d+\.\d+\.\d+\.\d+)\s*$/.exec(arg)
+    if ipCapture
+        params = {
+          Filters: [
+            Name: 'private-ip-address',
+            Values: [
+              ipCapture[1]
+            ]
           ]
-        ]
-      }
-
+        }
+    else
+      nameCapture = /^\s*(\S+)\s*$/.exec(arg)
+      if nameCapture
+        params = {
+          Filters: [
+            Name: 'tag:Name',
+            Values: [
+              nameCapture[1]
+            ]
+          ]
+        }
   return params
 
 # https://stackoverflow.com/questions/9796764/how-do-i-sort-an-array-with-coffeescript
